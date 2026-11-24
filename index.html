@@ -1853,6 +1853,7 @@ window.tpCloudLoadClients=async function(){
  const rows=data||[],ids=rows.map(x=>x.id);let noteById={};
  if(ids.length){const nr=await sb.from('client_records').select('client_id,content,created_at').eq('record_type','profile_note').in('client_id',ids).order('created_at',{ascending:false});if(!nr.error){for(const n of nr.data||[])if(!(n.client_id in noteById))noteById[n.client_id]=n.content||''}}
  db.clients=rows.map(r=>mapClient(r,noteById[r.id]||''));
+ if(typeof refresh==='function') refresh();
  if(typeof refreshClientSelectors==='function')refreshClientSelectors();
  if(document.getElementById('clients')&&!document.getElementById('clients').classList.contains('hidden'))renderClients();
  status(`اتصال ابری برقرار است · ${fa(rows.length)} پرونده از Supabase دریافت شد. جلسات و ارزیابی‌ها هنوز در این مرحله منتقل نشده‌اند.`);
