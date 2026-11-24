@@ -1490,6 +1490,9 @@ async function loadUsers(){
  }catch(err){target.textContent='دریافت فهرست کاربران ممکن نشد: '+(err.message||'خطا')}
 }
 function openSession(label,isAdmin,user){
+ window.tpGetCurrentAccount = function(){
+  return session?.account || account || null;
+};
  session={label,isAdmin,account:user||account};root.remove();
  document.body.insertAdjacentHTML('beforeend',`<div id="tp-session-bar"><span>ورود: ${esc(label)}</span><button id="tp-lock">قفل / خروج</button></div>`);
  document.getElementById('tp-lock').onclick=logout;
